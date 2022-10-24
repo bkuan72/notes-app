@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  bruce-ui-onboard-test:
+  notes-app:
     # container_name: ls10_net_web-application
     build:
       context: .
