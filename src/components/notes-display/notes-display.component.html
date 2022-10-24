@@ -1,0 +1,53 @@
+<div class="note-container" [class.note-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="note-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="note-app-name">{{title}} {{selectedCategory}}</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="note-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+          <a mat-list-item routerLink="." class="menu-option"
+                [ngClass]="{'menu-selected': selectedCategory === ''}"
+                (click)="getNewCategory()"
+          ><mat-icon aria-hidden="false" aria-label="Add New Category" fontIcon="add"></mat-icon>Add New Category</a>
+        <a mat-list-item routerLink="." *ngFor="let category of categories"  class="menu-option" [ngClass]="{
+            'menu-selected': selectedCategory === category
+          }"
+          (click)="select(category); snav.toggle()"
+          >
+          {{category}}</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div *ngIf="selectedCategory !== ''" (click)="addNewNote()">
+        <button mat-fab disabled aria-label="Add Note" title="Add New Note"
+        class="add-note-button"
+        >
+          <mat-icon >add</mat-icon>
+        </button>
+      </div>
+      <p *ngFor="let note of notes">
+        <mat-card class="note-card">
+          <mat-card-title>Created {{note.dateCreated | date}}</mat-card-title>
+          <mat-card-subtitle *ngIf="note.lastUpdateDate">Last Updated {{note.lastUpdateDate | date}}</mat-card-subtitle>
+          <mat-card-content>
+            <form class="note-form">
+              <mat-form-field class="input-note-full-width" appearance="fill">
+                <mat-label class="note-label">{{this.selectedCategory}}</mat-label>
+                <textarea matInput placeholder="Ex. It makes me feel..." [value]="note.data"></textarea>
+              </mat-form-field>
+            </form>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="doSaveNote(note)">SAVE</button>
+            <button mat-raised-button color="warn" (click)="doDeleteNote(note)">DELETE</button>
+          </mat-card-actions>
+        </mat-card>
+      </p>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
