@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  bruce-ui-onboard-test:
+    # container_name: ls10_net_web-application
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    stdin_open: true
+    tty: true
+    ports:
+      - "8080:8080"
