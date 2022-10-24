@@ -1,6 +1,6 @@
 
 # Stage 1
-FROM node:12 as build-step
+FROM node:16 as build-step
 RUN mkdir -p /app/ls10_net_notes
 WORKDIR /app/ls10_net_notes
 
