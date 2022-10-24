@@ -30,6 +30,7 @@ load() {
       this.categoriesList.push('To Do');
       this.categoriesList.push('Notes');
       this.save();
+      resolve(this.categoriesList);
     }
   })
 }
