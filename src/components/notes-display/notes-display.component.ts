@@ -89,7 +89,7 @@ export class NotesDisplayComponent implements OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
 
-      if (result !== null && result !== "") {
+      if (result && result !== null && result !== "") {
         const idx = this.categories.findIndex((category) => category === result);
         if (idx !== -1) {
           alert("Category Already Exist");
