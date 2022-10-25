@@ -88,7 +88,16 @@ export class NotesDisplayComponent implements OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.categories.push(result);
+
+      if (result !== null && result !== "") {
+        const idx = this.categories.findIndex((category) => category === result);
+        if (idx !== -1) {
+          alert("Category Already Exist");
+          return;
+        }
+        this.categories.push(result);
+        this.category.save(this.categories);
+      }
     });
   }
 
