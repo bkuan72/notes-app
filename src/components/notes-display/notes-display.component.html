@@ -35,12 +35,12 @@
           <mat-card-title>Created {{note.dateCreated | date}}</mat-card-title>
           <mat-card-subtitle *ngIf="note.lastUpdateDate">Last Updated {{note.lastUpdateDate | date}}</mat-card-subtitle>
           <mat-card-content>
-            <form class="note-form">
+            <!-- <form class="note-form"> -->
               <mat-form-field class="input-note-full-width" appearance="fill">
                 <mat-label class="note-label">{{this.selectedCategory}}</mat-label>
-                <textarea matInput placeholder="Ex. It makes me feel..." [value]="note.data"></textarea>
+                <textarea matInput placeholder="Please enter something..." [(ngModel)]="note.data"></textarea>
               </mat-form-field>
-            </form>
+            <!-- </form> -->
           </mat-card-content>
           <mat-card-actions>
             <button mat-raised-button color="primary" (click)="doSaveNote(note)">SAVE</button>

@@ -114,11 +114,11 @@ export class NotesDisplayComponent implements OnDestroy {
             this.noteServices.push(noteService);
             noteService.load(this.selectedCategory).then(() => {
               if (noteService) {
-                noteService.addNote('Input Note here...');
+                noteService.addNote('');
               }
             });
           } else {
-            noteService.addNote('Input Note here...');
+            noteService.addNote('');
           }
           this.notes = noteService.getNoteList();
       }
