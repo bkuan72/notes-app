@@ -97,6 +97,7 @@ export class NotesDisplayComponent implements OnDestroy {
         }
         this.categories.push(result);
         this.category.save(this.categories);
+        this.notes = [];
       }
     });
   }
@@ -124,12 +125,14 @@ export class NotesDisplayComponent implements OnDestroy {
             noteService.load(this.selectedCategory).then(() => {
               if (noteService) {
                 noteService.addNote('');
+                this.notes = noteService.getNoteList();
               }
             });
           } else {
             noteService.addNote('');
+            this.notes = noteService.getNoteList();
           }
-          this.notes = noteService.getNoteList();
+
       }
     }
   }
