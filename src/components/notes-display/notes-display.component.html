@@ -17,14 +17,14 @@
             'menu-selected': selectedCategory === category
           }"
           (click)="select(category); snav.toggle()"
-          ><mat-icon aria-hidden="false" aria-label="Remove Category" title="Remove Category" fontIcon="remove" (click)="removeCategory(category)"></mat-icon>
+          > <mat-icon aria-hidden="false" aria-label="Remove Category" title="Remove Category" fontIcon="remove" (click)="removeCategory(category)"></mat-icon>
           {{category}}</a>
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
       <div *ngIf="selectedCategory !== ''" (click)="addNewNote()">
-        <button mat-fab disabled aria-label="Add Note" title="Add New Note"
+        <button mat-fab aria-label="Add Note" title="Add New Note"
         class="add-note-button"
         >
           <mat-icon >add</mat-icon>

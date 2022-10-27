@@ -35,7 +35,7 @@ h1.note-app-name {
   bottom: 10%;
   right: 5%;
   z-index: 999999;
-
+  background-color: primary;
 }
 .menu-selected {
   background-color: cadetblue;
@@ -52,3 +52,4 @@ h1.note-app-name {
   font-size: larger;
   font-weight: bolder;
 }
+
