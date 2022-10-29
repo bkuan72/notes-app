@@ -10,7 +10,14 @@ describe('Service: Category', () => {
     });
   });
 
-  it('should ...', inject([CategoryService], (service: CategoryService) => {
+  it('should inject CategoryService...', inject([CategoryService], (service: CategoryService) => {
     expect(service).toBeTruthy();
+  }));
+
+  it('CategoryService should load...', inject([CategoryService], (service: CategoryService) => {
+    expect(service.load()).toBeTruthy();
+  }));
+  it('CategoryService should save...', inject([CategoryService], (service: CategoryService) => {
+    expect(service.save([])).toBeTruthy();
   }));
 });

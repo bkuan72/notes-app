@@ -1,3 +1,4 @@
+import { INoteData } from './note.service';
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
@@ -10,7 +11,27 @@ describe('Service: Note', () => {
     });
   });
 
-  it('should ...', inject([NoteService], (service: NoteService) => {
+  it('should inject NoteService...', inject([NoteService], (service: NoteService) => {
     expect(service).toBeTruthy();
+  }));
+  it('NoteService should load...', inject([NoteService], (service: NoteService) => {
+    expect(service.load('')).toBeTruthy();
+  }));
+  it('NoteService should save..', inject([NoteService], (service: NoteService) => {
+    expect(service.save()).toBeTruthy();
+  }));
+  it('NoteService should getNoteList..', inject([NoteService], (service: NoteService) => {
+    expect(service.getNoteList()).toEqual([]);
+  }));
+  it('NoteService should addNote..', inject([NoteService], (service: NoteService) => {
+    const val = service.addNote('test');
+    expect(val.data).toEqual('test');
+  }));
+  it('NoteService should updateNote..', inject([NoteService], (service: NoteService) => {
+    const val = service.updateNote('', 'crap');
+    expect(val).toEqual(-1);
+  }));
+  it('NoteService should removeNoe..', inject([NoteService], (service: NoteService) => {
+    expect(service.removeNote('')).toBeTruthy();
   }));
 });

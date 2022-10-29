@@ -41,6 +41,7 @@ save(categoryList?: string[]) {
   }
   const categoriesData = JSON.stringify(this.categoriesList);
   localStorage.setItem(this.categoryListName, categoriesData);
+  return true;
 }
 
 }

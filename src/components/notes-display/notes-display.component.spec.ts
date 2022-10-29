@@ -1,3 +1,6 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -12,8 +15,11 @@ describe('NotesDisplayComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatDialogModule,
-        MatIconModule
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatDialogModule
       ],
       declarations: [ NotesDisplayComponent ]
     })
@@ -26,7 +32,7 @@ describe('NotesDisplayComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create NotesDisplayComponent', () => {
     expect(component).toBeTruthy();
   });
 });

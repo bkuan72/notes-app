@@ -36,17 +36,20 @@ load(category: string) {
       this.categoryNoteList = JSON.parse(noteData);
       resolve(this.categoryNoteList);
     } else {
+      this.categoryNoteList = [];
       this.save();
+      resolve([]);
     }
   })
 }
 
-save() {
+save(): boolean {
   const noteData = JSON.stringify(this.categoryNoteList);
   localStorage.setItem(this.category + this.categoryNoteListName , noteData);
+  return true;
 }
 
-addNote(data: string) {
+addNote(data: string): INoteData {
   const newNote: INoteData = {
     uuid: uuidv4(),
     dateCreated: new Date(),
@@ -57,42 +60,48 @@ addNote(data: string) {
 
   this.categoryNoteList.push(newNote);
   this.save();
+  return (newNote);
 }
 
-updateNote(noteUuid: string | undefined, data: string) {
+updateNote(noteUuid: string | undefined, data: string ): number {
   if (noteUuid === undefined) {
-    return;
+    return -1;
   }
-  this.categoryNoteList.some((note, idx) => {
+  let updIdx = -1;
+  this.categoryNoteList.some((note, idx): any | undefined => {
     if (note.uuid === noteUuid) {
+      updIdx = idx;
       this.categoryNoteList[idx].data = data;
       this.categoryNoteList[idx].lastUpdateDate = new Date();
       this.save();
       return;
     }
   })
+  return updIdx;
 }
 
-removeNote(noteUuid: string | undefined) {
+removeNote(noteUuid: string | undefined): number {
   if (noteUuid === undefined) {
-    return;
+    return -1;
   }
   const noteIdx = this.categoryNoteList.findIndex((note) => note.uuid === noteUuid);
   if (noteIdx !== -1) {
     this.categoryNoteList.splice(noteIdx, 1);
     this.save();
   }
+  return noteIdx;
 }
 
-getNoteList() {
+getNoteList(): INoteData[]   {
   const noteList: INoteData[] = [];
   this.categoryNoteList.map((note) => { if (!note.deleted) { noteList.push(note);} });
   return noteList;
 
 }
 
-deleteNotes() {
+deleteNotes(): boolean {
   localStorage.removeItem(this.category + this.categoryNoteListName);
+  return true;
 }
 
 }
