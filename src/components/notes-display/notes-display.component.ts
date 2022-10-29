@@ -43,12 +43,12 @@ export class NotesDisplayComponent implements OnDestroy {
     })
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
+    this.mobileQuery.addEventListener("change", this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
       this.category.save(this.categories);
-      this.mobileQuery.removeListener(this._mobileQueryListener);
+      this.mobileQuery.removeEventListener("change", this._mobileQueryListener);
   }
 
   findNoteService(category: string): NoteService | undefined {
@@ -61,7 +61,6 @@ export class NotesDisplayComponent implements OnDestroy {
   }
 
   select(category: string): void {
-    let found = false;
     this.notes = [];
     this.selectedCategory = category;
 
@@ -76,7 +75,7 @@ export class NotesDisplayComponent implements OnDestroy {
     }
     noteService.load(category).then((notes) => {
       this.notes = notes;
-    })
+    });
   }
 
   getNewCategory(): void {
