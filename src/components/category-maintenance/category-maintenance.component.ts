@@ -1,15 +1,22 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogData {
   old: string;
   new: string;
 }
-
+/**
+ * Dialog to prompt for new Category
+ *
+ * @export
+ * @class CategoryMaintenanceComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-maint-category',
   templateUrl: './category-maintenance.component.html',
-  styleUrls: ['./category-maintenance.component.css']
+  styleUrls: ['./category-maintenance.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryMaintenanceComponent implements OnInit {
 
@@ -20,6 +27,10 @@ export class CategoryMaintenanceComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  /**
+   * closes the dialog
+   */
   onCancelClick(): void {
     this.dialogRef.close();
   }

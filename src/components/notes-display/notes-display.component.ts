@@ -1,15 +1,17 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { CategoryMaintenanceComponent } from 'src/components/category-maintenance/category-maintenance.component';
-import { INoteData, NoteService } from 'src/app/services/note.service';
-import { CategoryService } from 'src/app/services/category.service';
+import { INoteData, NoteService } from 'src/components/notes-display/data-access/note.service';
+import { CategoryService } from 'src/components/notes-display/data-access/category.service';
+import { INoteListElement } from './ui/note-list/note-list.component';
 
-/** @title Responsive sidenav */
+
 @Component({
   selector: 'notes-display-component',
   templateUrl: 'notes-display.component.html',
   styleUrls: ['notes-display.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotesDisplayComponent implements OnDestroy {
   private _mobileQueryListener: () => void;
@@ -18,7 +20,6 @@ export class NotesDisplayComponent implements OnDestroy {
 
   title = 'Notes App';
   categories: string[] = [];
-  showFiller = false;
   category: CategoryService;
   noteServices: NoteService[] = [];
   notes: INoteData[] = [];
@@ -50,7 +51,11 @@ export class NotesDisplayComponent implements OnDestroy {
       this.category.save(this.categories);
       this.mobileQuery.removeEventListener("change", this._mobileQueryListener);
   }
-
+/**
+ * Find note service associated with category
+ * @param category category name
+ * @returns
+ */
   findNoteService(category: string): NoteService | undefined {
 
     const noteIdx = this.noteServices.findIndex((noteS) => noteS.category === category);
@@ -59,25 +64,36 @@ export class NotesDisplayComponent implements OnDestroy {
     }
     return undefined;
   }
-
-  select(category: string): void {
+/**
+ * Select category, find/create note service for category and load category note list
+ * @param category category name
+ * @returns
+ */
+  select(category: string): Promise<INoteData[]> {
     this.notes = [];
     this.selectedCategory = category;
-
-    const noteService = this.findNoteService(category);
-    if (noteService === undefined) {
-      const newNoteService = new NoteService();
-      newNoteService.load(category).then((notes) => {
+    return new Promise ((resolve) => {
+      const noteService = this.findNoteService(category);
+      if (noteService === undefined) {
+        const newNoteService = new NoteService();
+        newNoteService.load(category).then((notes) => {
+          this.notes = notes;
+          this.noteServices.push(newNoteService);
+        });
+        resolve (this.notes);
+        return;
+      }
+      noteService.load(category).then((notes) => {
         this.notes = notes;
-        this.noteServices.push(newNoteService);
+        resolve(this.notes);
       });
-      return;
-    }
-    noteService.load(category).then((notes) => {
-      this.notes = notes;
-    });
-  }
+    })
 
+
+  }
+/**
+ * Prompt User for new category name
+ */
   getNewCategory(): void {
     this.selectedCategory = '';
     const dialogRef = this.dialog.open(CategoryMaintenanceComponent, {
@@ -100,7 +116,11 @@ export class NotesDisplayComponent implements OnDestroy {
       }
     });
   }
-
+/**
+ * Remove category from category list and delete notes associated with the category
+ * @param rmCategory category name to be remove
+ * @returns
+ */
   removeCategory(rmCategory: string) {
     const categoryIdx = this.categories.findIndex((category) => category === rmCategory);
     if (categoryIdx !== -1) {
@@ -111,8 +131,12 @@ export class NotesDisplayComponent implements OnDestroy {
       this.categories.splice(categoryIdx, 1);
       this.category.save(this.categories);
     }
+    return categoryIdx;
   }
-
+/**
+ * Add a new note for the currently selected Category
+ * @returns category note list
+ */
   addNewNote() {
       if (this.selectedCategory) {
         const categoryIdx = this.categories.findIndex((category) => category === this.selectedCategory);
@@ -131,22 +155,31 @@ export class NotesDisplayComponent implements OnDestroy {
             noteService.addNote('');
             this.notes = noteService.getNoteList();
           }
-
       }
     }
+    return this.notes;
   }
-
-  doSaveNote(note: INoteData) {
+/**
+ * Save the updated selectedCategory note list
+ * @param noteListData note list
+ * @returns
+ */
+  doSaveNote(noteListData: INoteListElement) {
     const noteService = this.findNoteService(this.selectedCategory);
     if (noteService) {
-      noteService.updateNote(note.uuid, note.data);
+      noteService.updateNote(noteListData.note.uuid, noteListData.note.data);
+      return true;
     }
+    return false;
   }
-
-  doDeleteNote(note: INoteData) {
+/**
+ * Delete the selected note from the currently selected Category note list
+ * @param noteListData
+ */
+  doDeleteNote(noteListData: INoteListElement) {
     const noteService = this.findNoteService(this.selectedCategory);
     if (noteService) {
-      noteService.removeNote(note.uuid);
+      noteService.removeNote(noteListData.note.uuid);
       this.notes = noteService.getNoteList();
     }
   }
