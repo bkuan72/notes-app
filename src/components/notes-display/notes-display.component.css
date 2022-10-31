@@ -40,16 +40,4 @@ h1.note-app-name {
 .menu-selected {
   background-color: cadetblue;
 }
-.input-note-full-width {
-  width: 100%;
-}
-.note-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-.note-label {
-  font-size: larger;
-  font-weight: bolder;
-}
 
