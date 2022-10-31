@@ -35,4 +35,10 @@ describe('NotesDisplayComponent', () => {
   it('should create NotesDisplayComponent', () => {
     expect(component).toBeTruthy();
   });
+  it('should create category service', () => {
+    expect(component.category).toBeTruthy();
+  });
+  it('should create category service', () => {
+    expect(component.dialog).toBeTruthy();
+  });
 });
