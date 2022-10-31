@@ -1,0 +1,15 @@
+<mat-card class="note-card">
+  <mat-card-title>Created {{note.dateCreated | date}}</mat-card-title>
+  <mat-card-subtitle *ngIf="note.lastUpdateDate">Last Updated {{note.lastUpdateDate | date}}</mat-card-subtitle>
+  <mat-card-content>
+        <mat-label class="note-label" (click)="clickEdit()">{{this.label}}</mat-label>
+        <p *ngIf="editing">
+          <textarea maxlength="256" class="note-text" rows="10" autofocus="true" autocomplete="on" matInput placeholder="Please enter something..." [(ngModel)]="note.data"></textarea>
+        </p>
+        <p *ngIf="!editing" [innerHtml]="note.data" (click)="clickEdit()"></p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" *ngIf="editing" (click)="doSave(note)">SAVE</button>
+    <button mat-raised-button color="warn" (click)="doDelete(note)">DELETE</button>
+  </mat-card-actions>
+</mat-card>

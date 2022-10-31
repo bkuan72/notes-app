@@ -1,0 +1,7 @@
+<p class="note-list" *ngFor="let note of notes; let idx = index; trackBy: trackById">
+  <app-note
+  [note]="note"
+  [label]="noteLabel"
+  (saveNote)="doSaveNote($event, idx)"
+  (deleteNote)="doDeleteNote($event, idx)"></app-note>
+</p>

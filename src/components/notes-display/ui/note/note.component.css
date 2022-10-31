@@ -1,0 +1,21 @@
+.input-note-full-width {
+  width: 100%;
+}
+
+.note-label {
+  font-size: larger;
+  font-weight: bolder;
+}
+.note-card {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.note-text {
+  min-width: 150px;
+  min-height: 100px;
+  width:100%;
+  height: auto;
+  overflow: auto;
+  word-wrap:break-word;
+}

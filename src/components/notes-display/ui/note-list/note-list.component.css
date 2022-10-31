@@ -1,0 +1,5 @@
+.note-list {
+  display: inline-flex;
+  flex: row wrap 500px;
+  padding: 20px;
+}

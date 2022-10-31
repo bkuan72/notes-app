@@ -14,8 +14,8 @@ import { BrowserModule } from '@angular/platform-browser';
     FormsModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
-  declarations: []
+  declarations: [ ]
 })
 export class NotesDisplayModule { }
