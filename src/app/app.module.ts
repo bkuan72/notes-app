@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NotesDisplayModule } from 'src/components/notes-display/notes-display.module';
 import { NoteListComponent } from 'src/components/notes-display/ui/note-list/note-list.component';
 import { NoteComponent } from 'src/components/notes-display/ui/note/note.component';
+import { AppGoogleDriveIfaceComponent } from 'src/components/shared/ui/app-google-drive-iface/app-google-drive-iface.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NoteComponent } from 'src/components/notes-display/ui/note/note.compone
     AppComponent,
     NotesDisplayComponent,
     NoteListComponent,
-    NoteComponent
+    NoteComponent,
+    AppGoogleDriveIfaceComponent
   ],
   imports: [
     BrowserModule,
