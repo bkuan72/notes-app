@@ -57,8 +57,7 @@ export class NoteComponent implements OnInit, AfterViewInit {
   doSave(note: INoteData): void {
     this.saving = true;
     this.editing = false;
-    const sanitizeData = this.sanitizer.sanitize(SecurityContext.HTML,note.data);
-    note.data = sanitizeData;
+
     note.new = false;
     this.saveNote.emit(note);
     this.saving = false;
